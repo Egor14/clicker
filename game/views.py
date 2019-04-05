@@ -39,4 +39,4 @@ def select(request):
 def click_list(request):
     obj = Click.objects.all().filter(user_id=request.session['_auth_user_id'])
 
-    return render(request, 'game/your_options.html', {'obj': obj})
+    return render(request, 'game/your_options.html', {'obj': obj, 'fun':5})
