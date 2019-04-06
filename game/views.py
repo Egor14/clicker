@@ -9,7 +9,10 @@ from django.http import HttpResponse
 def home_page(request, id):
     obj = Click.objects.get(id=id)
 
-    if obj.user_id.id == int(request.session['_auth_user_id']):
+    print(obj.users.all())
+    print(list(obj.users.all()))
+
+    if User.objects.get(id=int(request.session['_auth_user_id'])) in obj.users.all():
         return render(request, 'game/hello.html', {'data': obj})
     return HttpResponse('<h3>Ошибка доступа</h3>')
 
@@ -37,6 +40,6 @@ def select(request):
 
 
 def click_list(request):
-    obj = Click.objects.all().filter(user_id=request.session['_auth_user_id'])
+    obj = Click.objects.all().filter(users=request.session['_auth_user_id'])
 
-    return render(request, 'game/your_options.html', {'obj': obj, 'fun':5})
+    return render(request, 'game/your_options.html', {'obj': obj})
